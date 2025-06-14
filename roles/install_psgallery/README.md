@@ -1,7 +1,7 @@
 <!-- BEGIN_ANSIBLE_DOCS -->
 
 # Ansible Role: trippsc2.windows.install_psgallery
-Version: 1.1.2
+Version: 1.1.3
 
 This role installs the PSGallery repository for PowerShell modules on Windows machines.
 
@@ -9,13 +9,12 @@ This role installs the PSGallery repository for PowerShell modules on Windows ma
 
 | Platform | Versions |
 | -------- | -------- |
-| Windows | <ul><li>2019</li><li>2022</li></ul> |
+| Windows | <ul><li>all</li></ul> |
 
 ## Dependencies
 
 | Collection |
 | ---------- |
-| ansible.windows |
 | community.windows |
 
 ## Role Arguments
@@ -27,5 +26,5 @@ This role installs the PSGallery repository for PowerShell modules on Windows ma
 MIT
 
 ## Author and Project Information
-Jim Tarpley
+Jim Tarpley (@trippsc2)
 <!-- END_ANSIBLE_DOCS -->
