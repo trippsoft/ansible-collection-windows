@@ -1,0 +1,59 @@
+---
+name: Molecule - deployment_services role
+'on':
+  workflow_call: {}
+  workflow_dispatch: {}
+  pull_request:
+    branches:
+      - main
+    paths:
+      - galaxy.yml
+      - roles/deployment_services/**
+      - '!roles/deployment_services/.aar_doc.yml'
+      - '!roles/deployment_services/README.md'
+      - '!roles/deployment_services/meta/argument_specs.yml'
+      - '!roles/deployment_services/meta/main.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - galaxy.yml
+      - roles/deployment_services/**
+      - '!roles/deployment_services/.aar_doc.yml'
+      - '!roles/deployment_services/README.md'
+      - '!roles/deployment_services/meta/argument_specs.yml'
+      - '!roles/deployment_services/meta/main.yml'
+defaults:
+  run:
+    working-directory: 'trippsc2.windows'
+jobs:
+  molecule:
+    name: Run Molecule tests
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w2025_cis
+          - w2022_cis
+          - w2019_cis
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: 'trippsc2.windows'
+      - name: Run Molecule tests
+        run: |
+          source ~/venv/ansible-2.16/bin/activate
+          rm -rf ~/.ansible/collections/ansible_collections/*
+          cd ./roles/deployment_services
+          molecule test
+          rm -rf ~/.ansible/collections/ansible_collections/*
+          deactivate
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: '1'
+          MOLECULE_BOX: ${{ matrix.box }}

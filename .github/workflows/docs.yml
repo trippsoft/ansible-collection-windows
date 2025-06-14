@@ -1,0 +1,51 @@
+---
+name: Generate Role Docs
+'on':
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+    paths:
+      - galaxy.yml
+      - roles/deployment_services/.aar_doc.yml
+      - roles/deployment_services/README.md
+      - roles/deployment_services/meta/argument_specs.yml
+      - roles/deployment_services/meta/main.yml
+      - roles/dhcp_server/.aar_doc.yml
+      - roles/dhcp_server/README.md
+      - roles/dhcp_server/meta/argument_specs.yml
+      - roles/dhcp_server/meta/main.yml
+      - roles/install_psgallery/.aar_doc.yml
+      - roles/install_psgallery/README.md
+      - roles/install_psgallery/meta/argument_specs.yml
+      - roles/install_psgallery/meta/main.yml
+defaults:
+  run:
+    working-directory: 'trippsc2.windows'
+jobs:
+  docs_deployment_services:
+    name: Generate deployment_services role documentation
+    permissions:
+      contents: write
+    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
+    with:
+      working_directory: 'trippsc2.windows'
+      role_name: 'deployment_services'
+  docs_dhcp_server:
+    name: Generate dhcp_server role documentation
+    permissions:
+      contents: write
+    needs: docs_deployment_services
+    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
+    with:
+      working_directory: 'trippsc2.windows'
+      role_name: 'dhcp_server'
+  docs_install_psgallery:
+    name: Generate install_psgallery role documentation
+    permissions:
+      contents: write
+    needs: docs_dhcp_server
+    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
+    with:
+      working_directory: 'trippsc2.windows'
+      role_name: 'install_psgallery'

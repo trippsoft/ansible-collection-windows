@@ -11,11 +11,9 @@ galaxy_info:
   platforms:
     - name: Windows
       versions:
-        - '2019'
-        - '2022'
+        - all
 
 collections:
-  - ansible.windows
   - community.windows
 
 dependencies: []

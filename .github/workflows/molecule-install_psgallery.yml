@@ -1,0 +1,62 @@
+---
+name: Molecule - install_psgallery role
+'on':
+  workflow_call: {}
+  workflow_dispatch: {}
+  pull_request:
+    branches:
+      - main
+    paths:
+      - galaxy.yml
+      - roles/install_psgallery/**
+      - '!roles/install_psgallery/.aar_doc.yml'
+      - '!roles/install_psgallery/README.md'
+      - '!roles/install_psgallery/meta/argument_specs.yml'
+      - '!roles/install_psgallery/meta/main.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - galaxy.yml
+      - roles/install_psgallery/**
+      - '!roles/install_psgallery/.aar_doc.yml'
+      - '!roles/install_psgallery/README.md'
+      - '!roles/install_psgallery/meta/argument_specs.yml'
+      - '!roles/install_psgallery/meta/main.yml'
+defaults:
+  run:
+    working-directory: 'trippsc2.windows'
+jobs:
+  molecule:
+    name: Run Molecule tests
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+    strategy:
+      fail-fast: false
+      matrix:
+        box:
+          - w2025_cis
+          - w2022_cis
+          - w2019_cis
+          - w11_24h2_base
+          - w11_23h2_base
+          - w10_22h2_base
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: 'trippsc2.windows'
+      - name: Run Molecule tests
+        run: |
+          source ~/venv/ansible-2.16/bin/activate
+          rm -rf ~/.ansible/collections/ansible_collections/*
+          cd ./roles/install_psgallery
+          molecule test
+          rm -rf ~/.ansible/collections/ansible_collections/*
+          deactivate
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: '1'
+          MOLECULE_BOX: ${{ matrix.box }}

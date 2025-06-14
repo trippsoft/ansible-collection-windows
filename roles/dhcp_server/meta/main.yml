@@ -11,11 +11,14 @@ galaxy_info:
   platforms:
     - name: Windows
       versions:
-        - '2019'
+        - '2025'
         - '2022'
+        - '2019'
 
 collections:
+  - ansible.utils
   - ansible.windows
+  - community.windows
 
 dependencies:
   - role: trippsc2.windows.install_psgallery
