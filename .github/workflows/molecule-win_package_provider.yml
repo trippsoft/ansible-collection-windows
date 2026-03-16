@@ -38,7 +38,7 @@ jobs:
           - w10_22h2_base
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: 'trippsc2.windows'
       - name: Run Molecule tests
