@@ -16,3 +16,4 @@ This collection contains general purpose Windows modules and roles.
 - [deployment_services](roles/deployment_services/README.md) - This role installs and configures Windows Deployment Services role on Windows Server.
 - [dhcp_server](roles/dhcp_server/README.md) - This role installs and configures DHCP Server role on Windows Server.
 - [install_psgallery](roles/install_psgallery/README.md) - This role installs the PSGallery repository for PowerShell modules on Windows machines.
+- [testing_chocolatey](roles/testing_chocolatey/README.md) - This role configures the Testing Chocolatey Repository on Windows hosts.

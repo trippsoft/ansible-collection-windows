@@ -1,0 +1,28 @@
+---
+- name: Configure Chocolatey testing repository
+  when:
+    - choco_configure_testing_repo
+  block:
+    - name: Validate
+      ansible.builtin.include_tasks: validate.yml
+
+    - name: Disable default Chocolatey source
+      chocolatey.chocolatey.win_chocolatey_source:
+        name: chocolatey
+        state: disabled
+
+    - name: Configure Chocolatey sources
+      chocolatey.chocolatey.win_chocolatey_source:
+        name: "{{ choco_testing_repo_name }}"
+        source: "{{ choco_testing_repo_url }}"
+        state: present
+
+    - name: Disable Chocolatey enhanced exit codes
+      chocolatey.chocolatey.win_chocolatey_feature:
+        name: useEnhancedExitCodes
+        state: disabled
+
+    - name: Disable Chocolatey Repository optimizations
+      chocolatey.chocolatey.win_chocolatey_feature:
+        name: usePackageRepositoryOptimizations
+        state: disabled

@@ -19,6 +19,10 @@ name: Generate Role Docs
       - roles/install_psgallery/README.md
       - roles/install_psgallery/meta/argument_specs.yml
       - roles/install_psgallery/meta/main.yml
+      - roles/testing_chocolatey/.aar_doc.yml
+      - roles/testing_chocolatey/README.md
+      - roles/testing_chocolatey/meta/argument_specs.yml
+      - roles/testing_chocolatey/meta/main.yml
 defaults:
   run:
     working-directory: 'trippsc2.windows'
@@ -49,3 +53,12 @@ jobs:
     with:
       working_directory: 'trippsc2.windows'
       role_name: 'install_psgallery'
+  docs_testing_chocolatey:
+    name: Generate testing_chocolatey role documentation
+    permissions:
+      contents: write
+    needs: docs_install_psgallery
+    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
+    with:
+      working_directory: 'trippsc2.windows'
+      role_name: 'testing_chocolatey'

@@ -1,0 +1,27 @@
+---
+argument_specs:
+  main:
+    short_description: Configure Testing Chocolatey Repository
+    description:
+      - |
+        This role configures the Testing Chocolatey Repository on Windows hosts.
+        It ensures that the repository is added and properly configured for use with Chocolatey package manager.
+    author: Jim Tarpley (@trippsc2)
+    options:
+      choco_configure_testing_repo:
+        type: bool
+        default: false
+        description:
+          - Whether to configure the Testing Chocolatey Repository.
+      choco_testing_repo_name:
+        type: str
+        required: false
+        description:
+          - The name of the Testing Chocolatey Repository to be configured.
+          - This option is required if C(choco_configure_testing_repo) is set to C(true).
+      choco_testing_repo_url:
+        type: str
+        required: false
+        description:
+          - The URL of the Testing Chocolatey Repository to be configured.
+          - This option is required if C(choco_configure_testing_repo) is set to C(true).

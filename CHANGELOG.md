@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-03-17
+
+### Collection
+
+- *testing_chocolatey* role added.
+
 ## [1.1.3] - 2024-06-11
 
 ### Collection

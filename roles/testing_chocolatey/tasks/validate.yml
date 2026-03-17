@@ -1,0 +1,32 @@
+---
+- name: Gather OS facts
+  when:
+    - ansible_os_family is not defined
+  ansible.builtin.setup:
+    gather_subset:
+      - '!all'
+      - '!min'
+      - distribution
+
+- name: Validate OS is Windows
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family == 'Windows'
+    fail_msg: This role is not supported on {{ ansible_os_family }}.
+    success_msg: This role is supported on Windows.
+
+- name: Validate repo name is provided
+  ansible.builtin.assert:
+    that:
+      - choco_testing_repo_name is defined
+      - choco_testing_repo_name | length > 0
+    fail_msg: choco_testing_repo_name must be provided when choco_configure_testing_repo is true.
+    success_msg: choco_testing_repo_name is provided.
+
+- name: Validate repo URL is provided
+  ansible.builtin.assert:
+    that:
+      - choco_testing_repo_url is defined
+      - choco_testing_repo_url | length > 0
+    fail_msg: choco_testing_repo_url must be provided when choco_configure_testing_repo is true.
+    success_msg: choco_testing_repo_url is provided.

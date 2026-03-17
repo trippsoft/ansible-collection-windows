@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: Jim Tarpley (@trippsc2)
+  namespace: trippsc2
+  role_name: install_psgallery
+  description: |
+    This role configures the Testing Chocolatey Repository on Windows hosts.
+    It ensures that the repository is added and properly configured for use with Chocolatey package manager.
+  license: MIT
+
+  min_ansible_version: '2.16'
+
+  platforms:
+    - name: Windows
+      versions:
+        - all
+
+collections:
+  - community.windows
+
+dependencies: []
