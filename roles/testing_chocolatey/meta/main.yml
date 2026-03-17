@@ -2,7 +2,7 @@
 galaxy_info:
   author: Jim Tarpley (@trippsc2)
   namespace: trippsc2
-  role_name: install_psgallery
+  role_name: testing_chocolatey
   description: |
     This role configures the Testing Chocolatey Repository on Windows hosts.
     It ensures that the repository is added and properly configured for use with Chocolatey package manager.
@@ -16,6 +16,6 @@ galaxy_info:
         - all
 
 collections:
-  - community.windows
+  - chocolatey.chocolatey
 
 dependencies: []
