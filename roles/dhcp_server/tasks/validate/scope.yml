@@ -30,30 +30,31 @@
 - name: Get CIDR bits of the subnet mask
   ansible.builtin.set_fact:
     _dhcp_scope_cidr_bits: >-
-      {{ (_dhcp_scope.id |
-          string + '/' + _dhcp_scope.subnet_mask |
-          string) |
-          ansible.utils.ipaddr('prefix') }}
+      {{ (_dhcp_scope.id | string + '/' + _dhcp_scope.subnet_mask | string) | ansible.utils.ipaddr('prefix') }}
+
+- name: Get CIDR format of the network ID address
+  ansible.builtin.set_fact:
+    _dhcp_scope_id_cidr: "{{ _dhcp_scope.id }}/{{ _dhcp_scope_cidr_bits }}"
 
 - name: Validate DHCP scope network ID is a valid IPv4 network ID address
   ansible.builtin.assert:
     that:
-      - _dhcp_scope.id + '/' + _dhcp_scope_cidr_bits == _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits)
-    fail_msg: "The network ID address is not the valid IPv4 network ID address for the subnet. Value: {{ _dhcp_scope.id }}/{{ _dhcp_scope_cidr_bits }} Expected: {{ _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits) }}"
+      - _dhcp_scope_id_cidr == _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits)
+    fail_msg: "The network ID address is not the valid IPv4 network ID address for the subnet. Value: {{ _dhcp_scope_id_cidr }} Expected: {{ _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits) }}"
     success_msg: The network ID address is the valid IPv4 network ID address for the subnet.
 
 - name: Validate DHCP scope start is within the IPv4 subnet
   ansible.builtin.assert:
     that:
-      - _dhcp_scope.ip_start is ansible.utils.in_network (_dhcp_scope.id + '/' + _dhcp_scope_cidr_bits)
-    fail_msg: "The start IP address of the DHCP scope is not within the subnet. Value: {{ _dhcp_scope.ip_start }} Expected: {{ _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits) }}"
+      - _dhcp_scope_id_cidr | ansible.utils.network_in_usable(_dhcp_scope.ip_start)
+    fail_msg: "The start IP address of the DHCP scope is not within the subnet. Value: {{ _dhcp_scope.ip_start }} Subnet: {{ _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits) }}"
     success_msg: The start IP address of the DHCP scope is within the subnet.
 
 - name: Validate DHCP scope end is within the IPv4 subnet
   ansible.builtin.assert:
     that:
-      - _dhcp_scope.ip_end is ansible.utils.in_network (_dhcp_scope.id + '/' + _dhcp_scope_cidr_bits)
-    fail_msg: "The end IP address of the DHCP scope is not within the subnet. Value: {{ _dhcp_scope.ip_end }} Expected: {{ _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits) }}"
+      - _dhcp_scope_id_cidr | ansible.utils.network_in_usable(_dhcp_scope.ip_end)
+    fail_msg: "The end IP address of the DHCP scope is not within the subnet. Value: {{ _dhcp_scope.ip_end }} Subnet: {{ _dhcp_scope.id | ansible.utils.ipsubnet(_dhcp_scope_cidr_bits) }}"
     success_msg: The end IP address of the DHCP scope is within the subnet.
 
 - name: Validate DHCP scope option value is defined
