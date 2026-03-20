@@ -30,7 +30,7 @@
         accept_license: true
         state: latest
       register: _powershellget_module
-    
+
     - name: Verify PowerShellGet module is installed and updated
       ansible.builtin.assert:
         that:
@@ -45,7 +45,7 @@
         accept_license: true
         state: latest
       register: _packagemanagement_module
-    
+
     - name: Verify PackageManagement module is installed and updated
       ansible.builtin.assert:
         that:

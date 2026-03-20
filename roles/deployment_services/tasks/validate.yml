@@ -42,7 +42,7 @@
           $Ansible.Result = $false
         }
       }
-      catch { 
+      catch {
         $Ansible.Result = $false
         Write-Debug $_
       }

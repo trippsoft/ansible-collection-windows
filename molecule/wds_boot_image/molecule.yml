@@ -40,7 +40,15 @@ provisioner:
     host_vars:
       win:
         ansible_user: TEST\vagrant
-        ansible_ssh_common_args: '-o PreferredAuthentications=password -o PubkeyAuthentication=no -o UserKnownHostsFile=/dev/null -o ControlMaster=auto -o ControlPersist=60s -o ForwardX11=no -o LogLevel=ERROR -o StrictHostKeyChecking=no'
+        ansible_ssh_common_args: >-
+          -o PreferredAuthentications=password
+          -o PubkeyAuthentication=no
+          -o UserKnownHostsFile=/dev/null
+          -o ControlMaster=auto
+          -o ControlPersist=60s
+          -o ForwardX11=no
+          -o LogLevel=ERROR
+          -o StrictHostKeyChecking=no
 verifier:
   name: ansible
 scenario:
@@ -52,7 +60,6 @@ scenario:
     - create
     - prepare
     - converge
-    #- idempotence
     # Removed idempotence check, because this scenario tests for idempotence implicitly.
     - side_effect
     - verify
