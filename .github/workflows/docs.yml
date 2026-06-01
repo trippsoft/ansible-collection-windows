@@ -31,34 +31,110 @@ jobs:
     name: Generate deployment_services role documentation
     permissions:
       contents: write
-    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
-    with:
-      working_directory: 'trippsc2.windows'
-      role_name: 'deployment_services'
+    runs-on:
+      - self-hosted
+      - linux
+      - ansible
+      - x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          path: trippsc2.windows
+          ref: main
+      - name: Generate deployment_services role documentation
+        working-directory: 'trippsc2.windows'
+        run: |
+          source ~/venv/ansible-2.16/bin/activate
+          cd ./roles/deployment_services
+          aar-doc . markdown
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@github.com"
+          git add README.md || /bin/true
+          git commit -m "Update deployment_services role documentation." || /bin/true
+          git push origin main
+          deactivate
   docs_dhcp_server:
     name: Generate dhcp_server role documentation
+    needs: docs_deployment_services
     permissions:
       contents: write
-    needs: docs_deployment_services
-    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
-    with:
-      working_directory: 'trippsc2.windows'
-      role_name: 'dhcp_server'
+    runs-on:
+      - self-hosted
+      - linux
+      - ansible
+      - x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          path: trippsc2.windows
+          ref: main
+      - name: Generate dhcp_server role documentation
+        working-directory: 'trippsc2.windows'
+        run: |
+          source ~/venv/ansible-2.16/bin/activate
+          cd ./roles/dhcp_server
+          aar-doc . markdown
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@github.com"
+          git add README.md || /bin/true
+          git commit -m "Update dhcp_server role documentation." || /bin/true
+          git push origin main
+          deactivate
   docs_install_psgallery:
     name: Generate install_psgallery role documentation
+    needs: docs_dhcp_server
     permissions:
       contents: write
-    needs: docs_dhcp_server
-    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
-    with:
-      working_directory: 'trippsc2.windows'
-      role_name: 'install_psgallery'
+    runs-on:
+      - self-hosted
+      - linux
+      - ansible
+      - x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          path: trippsc2.windows
+          ref: main
+      - name: Generate install_psgallery role documentation
+        working-directory: 'trippsc2.windows'
+        run: |
+          source ~/venv/ansible-2.16/bin/activate
+          cd ./roles/install_psgallery
+          aar-doc . markdown
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@github.com"
+          git add README.md || /bin/true
+          git commit -m "Update install_psgallery role documentation." || /bin/true
+          git push origin main
+          deactivate
   docs_testing_chocolatey:
     name: Generate testing_chocolatey role documentation
+    needs: docs_install_psgallery
     permissions:
       contents: write
-    needs: docs_install_psgallery
-    uses: trippsoft/github-actions/.github/workflows/role-docs.yml@main
-    with:
-      working_directory: 'trippsc2.windows'
-      role_name: 'testing_chocolatey'
+    runs-on:
+      - self-hosted
+      - linux
+      - ansible
+      - x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          path: trippsc2.windows
+          ref: main
+      - name: Generate testing_chocolatey role documentation
+        working-directory: 'trippsc2.windows'
+        run: |
+          source ~/venv/ansible-2.16/bin/activate
+          cd ./roles/testing_chocolatey
+          aar-doc . markdown
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@github.com"
+          git add README.md || /bin/true
+          git commit -m "Update testing_chocolatey role documentation." || /bin/true
+          git push origin main
+          deactivate

@@ -41,9 +41,9 @@ jobs:
           - w2025_cis
           - w2022_cis
           - w2019_cis
+          - w11_25h2_base
           - w11_24h2_base
           - w11_23h2_base
-          - w10_22h2_base
         configure:
           - 'true'
           - 'false'
