@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2026-10-28
+
+### Role - deployment_services
+
+- Changed fact gathering to use `ansible_facts` instead of direct variables.
+
+### Role - dhcp_server
+
+- Changed fact gathering to use `ansible_facts` instead of direct variables.
+
+### Role - install_psgallery
+
+- Changed fact gathering to use `ansible_facts` instead of direct variables.
+
+### Role - testing_chocolatey
+
+- Changed fact gathering to use `ansible_facts` instead of direct variables.
+
 ## [1.2.0] - 2026-03-17
 
 ### Collection
